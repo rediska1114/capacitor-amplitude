@@ -1,6 +1,6 @@
 {
   "name": "capacitor-amplitude",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "description": "Amplitude plugin for capacitor",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",
@@ -17,10 +17,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rediska1114/capacitor-amplitude.git.git"
+    "url": "git+https://github.com/rediska1114/capacitor-amplitude.git"
   },
   "bugs": {
-    "url": "https://github.com/rediska1114/capacitor-amplitude.git/issues"
+    "url": "https://github.com/rediska1114/capacitor-amplitude/issues"
   },
   "keywords": [
     "capacitor",
@@ -43,23 +43,23 @@
     "prepublishOnly": "npm run build"
   },
   "devDependencies": {
-    "@capacitor/android": "^3.0.0",
-    "@capacitor/core": "^3.0.0",
-    "@capacitor/docgen": "^0.0.18",
-    "@capacitor/ios": "^3.0.0",
+    "@capacitor/android": "^5.0.0",
+    "@capacitor/core": "^5.0.0",
+    "@capacitor/docgen": "0.2.1",
+    "@capacitor/ios": "^5.0.0",
     "@ionic/eslint-config": "^0.3.0",
     "@ionic/prettier-config": "^1.0.1",
     "@ionic/swiftlint-config": "^1.1.2",
     "eslint": "^7.11.0",
-    "prettier": "~2.2.0",
-    "prettier-plugin-java": "~1.0.0",
+    "prettier": "2.8.8",
+    "prettier-plugin-java": "1.6.2",
     "rimraf": "^3.0.2",
     "rollup": "^2.32.0",
     "swiftlint": "^1.0.1",
-    "typescript": "~4.0.3"
+    "typescript": "4.9.5"
   },
   "peerDependencies": {
-    "@capacitor/core": "^3.0.0"
+    "@capacitor/core": "^5.0.0"
   },
   "prettier": "@ionic/prettier-config",
   "swiftlint": "@ionic/swiftlint-config",

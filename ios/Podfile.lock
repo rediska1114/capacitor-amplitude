@@ -1,13 +1,13 @@
 PODS:
-  - Amplitude (8.14.0):
+  - Amplitude (8.17.0):
     - AnalyticsConnector (~> 1.0.0)
-  - AnalyticsConnector (1.0.0)
-  - Capacitor (3.6.0):
+  - AnalyticsConnector (1.0.1)
+  - Capacitor (5.1.1):
     - CapacitorCordova
-  - CapacitorCordova (3.6.0)
+  - CapacitorCordova (5.1.1)
 
 DEPENDENCIES:
-  - Amplitude (= 8.14.0)
+  - Amplitude (= 8.17.0)
   - "Capacitor (from `../node_modules/@capacitor/ios`)"
   - "CapacitorCordova (from `../node_modules/@capacitor/ios`)"
 
@@ -23,11 +23,11 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@capacitor/ios"
 
 SPEC CHECKSUMS:
-  Amplitude: bff4ceaad2a79e908682134d75dc862960594ea6
-  AnalyticsConnector: 4c386d5972ac9da86e22d668564dbbac97558754
-  Capacitor: 838de9244464702bc67e3d47e81c471b79500059
-  CapacitorCordova: d4a821a58b9b14452b05c583b0e52379e45810e5
+  Amplitude: 60cd14cbd02ca12b9179b89c3d411dd971cf9b7e
+  AnalyticsConnector: eccd7e1cd3dd18e6bd09ac2506e37d4ed43ba3f4
+  Capacitor: 55956e1199b63efcd7f2dedffa5c6b9129c45aae
+  CapacitorCordova: b31a46ad379c93a5c04e0598a6164e8cb90c2bb2
 
-PODFILE CHECKSUM: 989ee9287315aac659f5c65c142cf6556a6ca191
+PODFILE CHECKSUM: e5c50ded0f9ee1270d5616e52c80b539d4121c51
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.12.1

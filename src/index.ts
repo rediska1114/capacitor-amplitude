@@ -1,12 +1,15 @@
 import { registerPlugin } from '@capacitor/core';
 
-import type { AmplitudePlugin } from './definitions';
+import type { AmplitudePlugin, IngestionMetadata, Plan } from './definitions';
 import { Identify } from './identify';
+import { PACKAGE_SOURCE_NAME, PACKAGE_VERSION } from './constants';
+
 const CapacitorAmplitude = registerPlugin<AmplitudePlugin>('Amplitude', {
   // web: () => import('./web').then(m => new m.AmplitudeWeb()),
 });
 
 export * from './definitions';
+export * from './identify';
 
 export class Amplitude {
   private static _instances: Record<string, Amplitude>;
@@ -36,6 +39,8 @@ export class Amplitude {
     return CapacitorAmplitude.initialize({
       instanceName: this.instanceName,
       apiKey,
+      libraryName: PACKAGE_SOURCE_NAME,
+      libraryVersion: PACKAGE_VERSION,
     });
   }
 
@@ -112,7 +117,19 @@ export class Amplitude {
    * @returns the deviceId.
    */
   getDeviceId(): Promise<string> {
-    return CapacitorAmplitude.getDeviceId({ instanceName: this.instanceName });
+    return CapacitorAmplitude.getDeviceId({
+      instanceName: this.instanceName,
+    }).then(({ deviceId }) => deviceId);
+  }
+
+  /**
+   * Use the Advertising ID on Android if available from Google Play Services.
+   * Must be called before init.
+   */
+  useAdvertisingIdForDeviceId(): Promise<void> {
+    return CapacitorAmplitude.useAdvertisingIdForDeviceId({
+      instanceName: this.instanceName,
+    });
   }
 
   /**
@@ -362,6 +379,30 @@ export class Amplitude {
     return CapacitorAmplitude.setEventUploadThreshold({
       instanceName: this.instanceName,
       eventUploadThreshold,
+    });
+  }
+
+  /**
+   * Sets tracking plan information.
+   *
+   * @param plan Plan object
+   */
+  setPlan(plan: Plan): Promise<void> {
+    return CapacitorAmplitude.setPlan({
+      instanceName: this.instanceName,
+      plan,
+    });
+  }
+
+  /**
+   * Sets ingestion metadata information.
+   *
+   * @param ingestionMetadata IngestionMetadata object
+   */
+  setIngestionMetadata(ingestionMetadata: IngestionMetadata): Promise<void> {
+    return CapacitorAmplitude.setIngestionMetadata({
+      instanceName: this.instanceName,
+      ingestionMetadata,
     });
   }
 

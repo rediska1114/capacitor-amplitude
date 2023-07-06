@@ -4,15 +4,16 @@
 // Define the plugin using the CAP_PLUGIN Macro, and
 // each method the plugin supports using the CAP_PLUGIN_METHOD macro.
 CAP_PLUGIN(AmplitudePlugin, "Amplitude",
-            CAP_PLUGIN_METHOD(initialize, CAPPluginReturnPromise);
+        CAP_PLUGIN_METHOD(initialize, CAPPluginReturnPromise);
         CAP_PLUGIN_METHOD(enableCoppaControl, CAPPluginReturnPromise); 
         CAP_PLUGIN_METHOD(disableCoppaControl, CAPPluginReturnPromise); 
         CAP_PLUGIN_METHOD(regenerateDeviceId, CAPPluginReturnPromise);
         CAP_PLUGIN_METHOD(setDeviceId, CAPPluginReturnPromise);
         CAP_PLUGIN_METHOD(getDeviceId, CAPPluginReturnPromise); 
         CAP_PLUGIN_METHOD(setOptOut, CAPPluginReturnPromise); 
-        CAP_PLUGIN_METHOD(setLibraryName, CAPPluginReturnPromise);
-        CAP_PLUGIN_METHOD(setLibraryVersion, CAPPluginReturnPromise); 
+        CAP_PLUGIN_METHOD(useAdvertisingIdForDeviceId, CAPPluginReturnPromise);
+        CAP_PLUGIN_METHOD(setPlan, CAPPluginReturnPromise); 
+        CAP_PLUGIN_METHOD(setIngestionMetadata, CAPPluginReturnPromise);
         CAP_PLUGIN_METHOD(trackingSessionEvents, CAPPluginReturnPromise); 
         CAP_PLUGIN_METHOD(setUseDynamicConfig, CAPPluginReturnPromise); 
         CAP_PLUGIN_METHOD(setUserId, CAPPluginReturnPromise);

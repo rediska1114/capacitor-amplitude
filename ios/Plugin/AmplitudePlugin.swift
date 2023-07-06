@@ -1,6 +1,6 @@
+import Amplitude
 import Capacitor
 import Foundation
-import Amplitude
 
 /**
  * Please read the Capacitor iOS Plugin Development Guide
@@ -8,7 +8,6 @@ import Amplitude
  */
 @objc(AmplitudePlugin)
 public class AmplitudePlugin: CAPPlugin {
-
     @objc
     func initialize(_ call: CAPPluginCall) {
         guard let instanceName = call.getString("instanceName") else {
@@ -16,6 +15,13 @@ public class AmplitudePlugin: CAPPlugin {
         }
         guard let apiKey = call.getString("apiKey") else {
             return call.reject("Missing apiKey argument")
+        }
+
+        if let libraryName = call.getString("libraryName") {
+            Amplitude.instance(withName: instanceName).libraryName = libraryName
+        }
+        if let libraryVersion = call.getString("libraryVersion") {
+            Amplitude.instance(withName: instanceName).libraryVersion = libraryVersion
         }
 
         Amplitude.instance(withName: instanceName).initializeApiKey(apiKey)
@@ -74,6 +80,17 @@ public class AmplitudePlugin: CAPPlugin {
     }
 
     @objc
+    func useAdvertisingIdForDeviceId(_ call: CAPPluginCall) {
+        guard let instanceName = call.getString("instanceName") else {
+            return call.reject("Missing instanceName argument")
+        }
+
+        Amplitude.instance(withName: instanceName).useAdvertisingIdForDeviceId()
+
+        call.resolve()
+    }
+
+    @objc
     func setOptOut(_ call: CAPPluginCall) {
         guard let instanceName = call.getString("instanceName") else {
             return call.reject("Missing instanceName argument")
@@ -85,30 +102,30 @@ public class AmplitudePlugin: CAPPlugin {
         call.resolve()
     }
 
-    @objc
-    func setLibraryName(_ call: CAPPluginCall) {
-        guard let instanceName = call.getString("instanceName") else {
-            return call.reject("Missing instanceName argument")
-        }
-        guard let libraryName = call.getString("libraryName") else {
-            return call.reject("Missing libraryName argument")
-        }
-        Amplitude.instance(withName: instanceName).libraryName = libraryName
-        call.resolve()
-    }
+    // @objc
+    // func setLibraryName(_ call: CAPPluginCall) {
+    //     guard let instanceName = call.getString("instanceName") else {
+    //         return call.reject("Missing instanceName argument")
+    //     }
+    //     guard let libraryName = call.getString("libraryName") else {
+    //         return call.reject("Missing libraryName argument")
+    //     }
+    //     Amplitude.instance(withName: instanceName).libraryName = libraryName
+    //     call.resolve()
+    // }
 
-    @objc
-    func setLibraryVersion(_ call: CAPPluginCall) {
-        guard let instanceName = call.getString("instanceName") else {
-            return call.reject("Missing instanceName argument")
-        }
-        guard let libraryVersion = call.getString("libraryVersion") else {
-            return call.reject("Missing libraryVersion argument")
-        }
+    // @objc
+    // func setLibraryVersion(_ call: CAPPluginCall) {
+    //     guard let instanceName = call.getString("instanceName") else {
+    //         return call.reject("Missing instanceName argument")
+    //     }
+    //     guard let libraryVersion = call.getString("libraryVersion") else {
+    //         return call.reject("Missing libraryVersion argument")
+    //     }
 
-        Amplitude.instance(withName: instanceName).libraryVersion = libraryVersion
-        call.resolve()
-    }
+    //     Amplitude.instance(withName: instanceName).libraryVersion = libraryVersion
+    //     call.resolve()
+    // }
 
     @objc
     func trackingSessionEvents(_ call: CAPPluginCall) {
@@ -350,6 +367,52 @@ public class AmplitudePlugin: CAPPlugin {
         call.resolve()
     }
 
+    @objc
+    func setPlan(_ call: CAPPluginCall) {
+        guard let instanceName = call.getString("instanceName") else {
+            return call.reject("Missing instanceName argument")
+        }
+        guard let planProperties = call.getObject("planProperties") else {
+            return call.reject("Missing planProperties argument")
+        }
+        let plan = AMPPlan()
+        if planProperties["branch"] != nil {
+            plan.setBranch(planProperties["branch"] as! String)
+        }
+        if planProperties["source"] != nil {
+            plan.setSource(planProperties["source"] as! String)
+        }
+        if planProperties["version"] != nil {
+            plan.setVersion(planProperties["version"] as! String)
+        }
+        if planProperties["versionId"] != nil {
+            plan.setVersionId(planProperties["versionId"] as! String)
+        }
+        Amplitude.instance(withName: instanceName).setPlan(plan)
+        call.resolve()
+    }
+
+    @objc
+    func setIngestionMetadata(_ call: CAPPluginCall) {
+        guard let instanceName = call.getString("instanceName") else {
+            return call.reject("Missing instanceName argument")
+        }
+
+        guard let ingestionMetadataProperties = call.getObject("ingestionMetadataProperties") else {
+            return call.reject("Missing ingestionMetadataProperties argument")
+        }
+
+        let ingestionMetadata = AMPIngestionMetadata()
+        if ingestionMetadataProperties["sourceName"] != nil {
+            ingestionMetadata.setSourceName(ingestionMetadataProperties["sourceName"] as! String)
+        }
+        if ingestionMetadataProperties["sourceVersion"] != nil {
+            ingestionMetadata.setSourceVersion(ingestionMetadataProperties["sourceVersion"] as! String)
+        }
+        Amplitude.instance(withName: instanceName).setIngestionMetadata(ingestionMetadata)
+        call.resolve()
+    }
+
     private func createRevenue(_ userProperties: [String: Any]) -> AMPRevenue {
         let revenue = AMPRevenue()
         if userProperties["productId"] != nil {
@@ -386,6 +449,10 @@ public class AmplitudePlugin: CAPPlugin {
                     identify.append(key, value: value)
                 case "$prepend":
                     identify.prepend(key, value: value)
+                case "$preInsert":
+                    identify.preInsert(key, value: value)
+                case "$postInsert":
+                    identify.postInsert(key, value: value)
                 case "$set":
                     identify.set(key, value: value)
                 case "$setOnce":
