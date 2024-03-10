@@ -2,6 +2,8 @@ import Amplitude
 import Capacitor
 import Foundation
 
+var initialized = false
+
 /// Please read the Capacitor iOS Plugin Development Guide
 /// here: https://capacitorjs.com/docs/plugins/ios
 @objc(AmplitudePlugin)
@@ -16,7 +18,12 @@ public class AmplitudePlugin: CAPPlugin {
       return call.reject("Missing apiKey argument")
     }
 
+    if initialized {
+      return call.resolve()
+    }
+
     Amplitude.instance(withName: instanceName).initCompletionBlock = {
+      initialized = true
       call.resolve()
     }
     Amplitude.instance(withName: instanceName).initializeApiKey(apiKey)
