@@ -90,7 +90,7 @@ export interface AmplitudePlugin {
   ): Promise<void>;
   clearUserProperties(options: AmplitudeInstance): Promise<void>;
   uploadEvents(options: AmplitudeInstance): Promise<void>;
-  getSessionId(options: AmplitudeInstance): Promise<number>;
+  getSessionId(options: AmplitudeInstance): Promise<{ sessionId: number }>;
   setMinTimeBetweenSessionsMillis(
     options: AmplitudeInstance & {
       minTimeBetweenSessionsMillis: number;

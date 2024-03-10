@@ -304,7 +304,9 @@ export class Amplitude {
    * @returns the sessionId.
    */
   getSessionId(): Promise<number> {
-    return CapacitorAmplitude.getSessionId({ instanceName: this.instanceName });
+    return CapacitorAmplitude.getSessionId({
+      instanceName: this.instanceName,
+    }).then(({ sessionId }) => sessionId);
   }
 
   /**
