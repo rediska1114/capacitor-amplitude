@@ -1,6 +1,6 @@
 {
   "name": "capacitor-amplitude",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Amplitude plugin for capacitor",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",

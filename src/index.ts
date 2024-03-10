@@ -112,7 +112,9 @@ export class Amplitude {
    * @returns the deviceId.
    */
   getDeviceId(): Promise<string> {
-    return CapacitorAmplitude.getDeviceId({ instanceName: this.instanceName });
+    return CapacitorAmplitude.getDeviceId({
+      instanceName: this.instanceName,
+    }).then(({ deviceId }) => deviceId);
   }
 
   /**
@@ -287,7 +289,9 @@ export class Amplitude {
    * @returns the sessionId.
    */
   getSessionId(): Promise<number> {
-    return CapacitorAmplitude.getSessionId({ instanceName: this.instanceName });
+    return CapacitorAmplitude.getSessionId({
+      instanceName: this.instanceName,
+    }).then(({ sessionId }) => sessionId);
   }
 
   /**

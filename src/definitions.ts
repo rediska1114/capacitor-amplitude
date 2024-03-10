@@ -25,7 +25,7 @@ export interface AmplitudePlugin {
     instanceName: string;
     deviceId: string;
   }): Promise<void>;
-  getDeviceId(options: { instanceName: string }): Promise<string>;
+  getDeviceId(options: { instanceName: string }): Promise<{ deviceId: string }>;
   setOptOut(options: { instanceName: string; optOut: boolean }): Promise<void>;
   setLibraryName(options: {
     instanceName: string;
@@ -76,7 +76,9 @@ export interface AmplitudePlugin {
   }): Promise<void>;
   clearUserProperties(options: { instanceName: string }): Promise<void>;
   uploadEvents(options: { instanceName: string }): Promise<void>;
-  getSessionId(options: { instanceName: string }): Promise<number>;
+  getSessionId(options: {
+    instanceName: string;
+  }): Promise<{ sessionId: number }>;
   setMinTimeBetweenSessionsMillis(options: {
     instanceName: string;
     minTimeBetweenSessionsMillis: number;
