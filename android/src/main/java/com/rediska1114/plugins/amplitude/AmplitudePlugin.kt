@@ -135,7 +135,7 @@ class AmplitudePlugin : Plugin() {
   }
 
   @PluginMethod
-  fun identifyUser(call: PluginCall) {
+  fun identify(call: PluginCall) {
     val properties = call.getObject("properties")?.toMap() ?: emptyMap()
 
     amplitude.identify(properties)
