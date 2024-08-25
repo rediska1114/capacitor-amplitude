@@ -33,6 +33,8 @@ export interface AmplitudePlugin {
     options: InstanceNameOptions & { groupType: string; groupName: string },
   ): Promise<void>;
   logRevenue(options: InstanceNameOptions & unknown): Promise<void>;
+  getDeviceId(options: InstanceNameOptions): Promise<{ deviceId: string }>;
+  getUserId(options: InstanceNameOptions): Promise<{ userId: string }>;
 }
 
 export interface AmplitudeConfiguration {

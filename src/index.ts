@@ -25,7 +25,7 @@ export class Amplitude {
 
   initialize(
     apiKey: string,
-    configuration: AmplitudeConfiguration,
+    configuration: AmplitudeConfiguration = {},
   ): Promise<void> {
     return CapacitorAmplitude.initialize({
       instanceName: this.instanceName,
@@ -74,5 +74,17 @@ export class Amplitude {
     return CapacitorAmplitude.logRevenue({
       instanceName: this.instanceName,
     });
+  }
+
+  getDeviceId(): Promise<{ deviceId: string }> {
+    return CapacitorAmplitude.getDeviceId({
+      instanceName: this.instanceName,
+    }).then(({ deviceId }) => ({ deviceId }));
+  }
+
+  getUserId(): Promise<{ userId: string }> {
+    return CapacitorAmplitude.getUserId({
+      instanceName: this.instanceName,
+    }).then(({ userId }) => ({ userId }));
   }
 }

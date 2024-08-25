@@ -37,14 +37,14 @@ class AmplitudePlugin : Plugin() {
 
     val config =
         Configuration(
-                apiKey = apiKey,
-                context = this.context.applicationContext,
-                autocapture = autocaptureSet)
-            // .apply {
+            apiKey = apiKey,
+            context = this.context.applicationContext,
+            autocapture = autocaptureSet)
+    // .apply {
 
-              //          trackingOptions = call.getString("trackingOptions")?.let {
-              // TrackingOptions.valueOf(it) }
-            // }
+    //          trackingOptions = call.getString("trackingOptions")?.let {
+    // TrackingOptions.valueOf(it) }
+    // }
 
     if (call.hasOption("deviceId")) {
       config.deviceId = call.getString("deviceId")
@@ -153,6 +153,20 @@ class AmplitudePlugin : Plugin() {
     } else {
       call.reject("User ID is required")
     }
+  }
+
+  @PluginMethod
+  fun getDeviceId(call: PluginCall) {
+    val deviceId = amplitude.getDeviceId()
+    val data = JSObject().apply { put("deviceId", deviceId) }
+    call.resolve(data)
+  }
+
+  @PluginMethod
+  fun getUserId(call: PluginCall) {
+    val userId = amplitude.getUserId()
+    val data = JSObject().apply { put("userId", userId) }
+    call.resolve(data)
   }
 
   @PluginMethod
