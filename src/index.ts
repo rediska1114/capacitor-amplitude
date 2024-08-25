@@ -70,7 +70,7 @@ export class Amplitude {
       ...options,
     });
   }
-  logRevenue(options: unknown): Promise<void> {
+  logRevenue(_: unknown): Promise<void> {
     return CapacitorAmplitude.logRevenue({
       instanceName: this.instanceName,
     });
