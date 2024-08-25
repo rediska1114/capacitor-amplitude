@@ -34,40 +34,39 @@ export class Amplitude {
     });
   }
 
-  track(options: {
-    eventName: string;
-    properties: PropertiesObject;
-  }): Promise<void> {
+  track(eventName: string, properties: PropertiesObject = {}): Promise<void> {
     return CapacitorAmplitude.track({
       instanceName: this.instanceName,
-      ...options,
+      eventName,
+      properties,
     });
   }
-  identifyUser(options: { properties: PropertiesObject }): Promise<void> {
+  identifyUser(properties: PropertiesObject): Promise<void> {
     return CapacitorAmplitude.identifyUser({
       instanceName: this.instanceName,
-      ...options,
+      properties,
     });
   }
-  setUserId(options: { userId: string }): Promise<void> {
+  setUserId(userId: string): Promise<void> {
     return CapacitorAmplitude.setUserId({
       instanceName: this.instanceName,
-      ...options,
+      userId,
     });
   }
-  setDeviceId(options: { deviceId: string }): Promise<void> {
+  setDeviceId(deviceId: string): Promise<void> {
     return CapacitorAmplitude.setDeviceId({
       instanceName: this.instanceName,
-      ...options,
+      deviceId,
     });
   }
   reset(): Promise<void> {
     return CapacitorAmplitude.reset({ instanceName: this.instanceName });
   }
-  setGroup(options: { groupType: string; groupName: string }): Promise<void> {
+  setGroup(groupType: string, groupName: string): Promise<void> {
     return CapacitorAmplitude.setGroup({
       instanceName: this.instanceName,
-      ...options,
+      groupType,
+      groupName,
     });
   }
   logRevenue(_: unknown): Promise<void> {
