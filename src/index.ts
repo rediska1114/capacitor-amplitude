@@ -41,8 +41,8 @@ export class Amplitude {
       properties,
     });
   }
-  identifyUser(properties: PropertiesObject): Promise<void> {
-    return CapacitorAmplitude.identifyUser({
+  identify(properties: PropertiesObject): Promise<void> {
+    return CapacitorAmplitude.identify({
       instanceName: this.instanceName,
       properties,
     });
@@ -75,15 +75,15 @@ export class Amplitude {
     });
   }
 
-  getDeviceId(): Promise<{ deviceId: string }> {
+  getDeviceId() {
     return CapacitorAmplitude.getDeviceId({
       instanceName: this.instanceName,
-    }).then(({ deviceId }) => ({ deviceId }));
+    }).then(({ deviceId }) => deviceId);
   }
 
-  getUserId(): Promise<{ userId: string }> {
+  getUserId() {
     return CapacitorAmplitude.getUserId({
       instanceName: this.instanceName,
-    }).then(({ userId }) => ({ userId }));
+    }).then(({ userId }) => userId);
   }
 }

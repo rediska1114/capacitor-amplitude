@@ -21,7 +21,7 @@ export interface AmplitudePlugin {
       properties: PropertiesObject;
     },
   ): Promise<void>;
-  identifyUser(
+  identify(
     options: InstanceNameOptions & { properties: PropertiesObject },
   ): Promise<void>;
   setUserId(options: InstanceNameOptions & { userId: string }): Promise<void>;
