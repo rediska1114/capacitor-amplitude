@@ -1,6 +1,6 @@
 {
   "name": "capacitor-amplitude",
-  "version": "2.0.1",
+  "version": "3.0.0-beta.1",
   "description": "Amplitude plugin for capacitor",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",
@@ -69,6 +69,9 @@
   "capacitor": {
     "ios": {
       "src": "ios"
+    },
+    "android": {
+      "src": "android"
     }
   }
 }
