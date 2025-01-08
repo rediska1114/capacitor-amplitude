@@ -13,11 +13,13 @@ import com.getcapacitor.annotation.CapacitorPlugin
 
 @CapacitorPlugin(name = "Amplitude")
 class AmplitudePlugin : Plugin() {
-  private lateinit var amplitude: Amplitude
+  private val amplitudeInstances: MutableMap<String, Amplitude> = mutableMapOf()
+  private val defaultInstanceName = "$default_instance"
 
   @PluginMethod
   fun initialize(call: PluginCall) {
     val apiKey = call.getString("apiKey") ?: return call.reject("API Key is required")
+    val instanceName = call.getString("instanceName") ?: defaultInstanceName
 
     val autocaptureSet = mutableSetOf<AutocaptureOption>(AutocaptureOption.SESSIONS)
 
@@ -31,6 +33,7 @@ class AmplitudePlugin : Plugin() {
           "APP_LIFECYCLES" -> autocaptureSet.add(AutocaptureOption.APP_LIFECYCLES)
           "DEEP_LINKS" -> autocaptureSet.add(AutocaptureOption.DEEP_LINKS)
           "SCREEN_VIEWS" -> autocaptureSet.add(AutocaptureOption.SCREEN_VIEWS)
+          "ELEMENT_INTERACTIONS" -> autocaptureSet.add(AutocaptureOption.ELEMENT_INTERACTIONS)
         }
       }
     }
@@ -39,12 +42,8 @@ class AmplitudePlugin : Plugin() {
         Configuration(
             apiKey = apiKey,
             context = this.context.applicationContext,
+            instanceName = instanceName,
             autocapture = autocaptureSet)
-    // .apply {
-
-    //          trackingOptions = call.getString("trackingOptions")?.let {
-    // TrackingOptions.valueOf(it) }
-    // }
 
     if (call.hasOption("deviceId")) {
       config.deviceId = call.getString("deviceId")
@@ -103,9 +102,6 @@ class AmplitudePlugin : Plugin() {
     if (call.hasOption("enableCoppaControl")) {
       config.enableCoppaControl = call.getBoolean("enableCoppaControl")!!
     }
-    if (call.hasOption("instanceName")) {
-      config.instanceName = call.getString("instanceName")!!
-    }
     if (call.hasOption("migrateLegacyData")) {
       config.migrateLegacyData = call.getBoolean("migrateLegacyData")!!
     }
@@ -116,13 +112,15 @@ class AmplitudePlugin : Plugin() {
       config.locationListening = call.getBoolean("locationListening")!!
     }
 
-    amplitude = Amplitude(config)
+    val amplitude = Amplitude(config)
+    amplitudeInstances[instanceName] = amplitude
     call.resolve()
   }
 
   @PluginMethod
   fun track(call: PluginCall) {
     val eventName = call.getString("eventName")
+    val instanceName = call.getString("instanceName") ?: defaultInstanceName
     val properties = call.getObject("properties")?.toMap() ?: emptyMap()
 
     if (eventName == null) {
@@ -130,25 +128,26 @@ class AmplitudePlugin : Plugin() {
       return
     }
 
-    amplitude.track(eventName, properties)
+    amplitudeInstances[instanceName]?.track(eventName, properties)
     call.resolve()
   }
 
   @PluginMethod
   fun identify(call: PluginCall) {
+    val instanceName = call.getString("instanceName") ?: defaultInstanceName
     val properties = call.getObject("properties")?.toMap() ?: emptyMap()
 
-    amplitude.identify(properties)
-
+    amplitudeInstances[instanceName]?.identify(properties)
     call.resolve()
   }
 
   @PluginMethod
   fun setUserId(call: PluginCall) {
     val userId = call.getString("userId")
+    val instanceName = call.getString("instanceName") ?: defaultInstanceName
 
     if (userId != null) {
-      amplitude.setUserId(userId)
+      amplitudeInstances[instanceName]?.setUserId(userId)
       call.resolve()
     } else {
       call.reject("User ID is required")
@@ -157,14 +156,16 @@ class AmplitudePlugin : Plugin() {
 
   @PluginMethod
   fun getDeviceId(call: PluginCall) {
-    val deviceId = amplitude.getDeviceId()
+    val instanceName = call.getString("instanceName") ?: defaultInstanceName
+    val deviceId = amplitudeInstances[instanceName]?.getDeviceId()
     val data = JSObject().apply { put("deviceId", deviceId) }
     call.resolve(data)
   }
 
   @PluginMethod
   fun getUserId(call: PluginCall) {
-    val userId = amplitude.getUserId()
+    val instanceName = call.getString("instanceName") ?: defaultInstanceName
+    val userId = amplitudeInstances[instanceName]?.getUserId()
     val data = JSObject().apply { put("userId", userId) }
     call.resolve(data)
   }
@@ -172,9 +173,10 @@ class AmplitudePlugin : Plugin() {
   @PluginMethod
   fun setDeviceId(call: PluginCall) {
     val deviceId = call.getString("deviceId")
+    val instanceName = call.getString("instanceName") ?: defaultInstanceName
 
     if (deviceId != null) {
-      amplitude.setDeviceId(deviceId)
+      amplitudeInstances[instanceName]?.setDeviceId(deviceId)
       call.resolve()
     } else {
       call.reject("Device ID is required")
@@ -183,7 +185,8 @@ class AmplitudePlugin : Plugin() {
 
   @PluginMethod
   fun reset(call: PluginCall) {
-    amplitude.reset()
+    val instanceName = call.getString("instanceName") ?: defaultInstanceName
+    amplitudeInstances[instanceName]?.reset()
     call.resolve()
   }
 
@@ -191,9 +194,10 @@ class AmplitudePlugin : Plugin() {
   fun setGroup(call: PluginCall) {
     val groupType = call.getString("groupType")
     val groupName = call.getString("groupName")
+    val instanceName = call.getString("instanceName") ?: defaultInstanceName
 
     if (groupType != null && groupName != null) {
-      amplitude.setGroup(groupType, groupName)
+      amplitudeInstances[instanceName]?.setGroup(groupType, groupName)
       call.resolve()
     } else {
       call.reject("Group type and name are required")
@@ -202,16 +206,7 @@ class AmplitudePlugin : Plugin() {
 
   @PluginMethod
   fun logRevenue(call: PluginCall) {
-    //    val productId = call.getString("productId")
-    //    val price = call.getDouble("price") ?: 0.0
-    //    val quantity = call.getInt("quantity") ?: 1
-    //
-    //    if (productId != null) {
-    //      amplitude.logRevenue(productId, price, quantity)
-    //      call.resolve()
-    //    } else {
-    //      call.reject("Product ID is required")
-    //    }
+    // Implement logRevenue method if needed
     Log.w("AmplitudePlugin", "logRevenue not implemented")
   }
 

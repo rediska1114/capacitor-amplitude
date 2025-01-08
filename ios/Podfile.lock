@@ -1,19 +1,19 @@
 PODS:
-  - Amplitude (8.17.0):
-    - AnalyticsConnector (~> 1.0.0)
-  - AnalyticsConnector (1.0.1)
+  - AmplitudeSwift (1.11.2):
+    - AnalyticsConnector (~> 1.3.0)
+  - AnalyticsConnector (1.3.1)
   - Capacitor (5.1.1):
     - CapacitorCordova
   - CapacitorCordova (5.1.1)
 
 DEPENDENCIES:
-  - Amplitude (= 8.17.0)
+  - AmplitudeSwift (= 1.11.2)
   - "Capacitor (from `../node_modules/@capacitor/ios`)"
   - "CapacitorCordova (from `../node_modules/@capacitor/ios`)"
 
 SPEC REPOS:
   trunk:
-    - Amplitude
+    - AmplitudeSwift
     - AnalyticsConnector
 
 EXTERNAL SOURCES:
@@ -23,11 +23,11 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@capacitor/ios"
 
 SPEC CHECKSUMS:
-  Amplitude: 60cd14cbd02ca12b9179b89c3d411dd971cf9b7e
-  AnalyticsConnector: eccd7e1cd3dd18e6bd09ac2506e37d4ed43ba3f4
+  AmplitudeSwift: ec670fe6f0a0b673bde44b6f02359993cc5513b1
+  AnalyticsConnector: 3def11199b4ddcad7202c778bde982ec5da0ebb3
   Capacitor: 55956e1199b63efcd7f2dedffa5c6b9129c45aae
   CapacitorCordova: b31a46ad379c93a5c04e0598a6164e8cb90c2bb2
 
-PODFILE CHECKSUM: e5c50ded0f9ee1270d5616e52c80b539d4121c51
+PODFILE CHECKSUM: 8366c3a20c7542ba151a45a1a3651bddcee2d511
 
-COCOAPODS: 1.12.1
+COCOAPODS: 1.15.2

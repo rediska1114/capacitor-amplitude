@@ -39,7 +39,7 @@ export interface AmplitudePlugin {
 
 export interface AmplitudeConfiguration {
   autocapture?: Array<
-    'SESSIONS' | 'APP_LIFECYCLES' | 'DEEP_LINKS' | 'SCREEN_VIEWS'
+    'SESSIONS' | 'APP_LIFECYCLES' | 'DEEP_LINKS' | 'SCREEN_VIEWS' | 'ELEMENT_INTERACTIONS'
   >;
 
   deviceId?: string;
