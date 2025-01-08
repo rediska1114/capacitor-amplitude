@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   s.dependency "Capacitor"
   s.swift_version = "5.1"
   s.library = "sqlite3"
-  s.dependency "Amplitude", "8.17.0"
+  s.dependency "AmplitudeSwift", "1.11.2"
   s.xcconfig = {
     "OTHER_LDFLAGS" => "-lsqlite3.0",
   }
