@@ -39,9 +39,16 @@ export interface AmplitudePlugin {
 
 export interface AmplitudeConfiguration {
   autocapture?: Array<
-    'SESSIONS' | 'APP_LIFECYCLES' | 'DEEP_LINKS' | 'SCREEN_VIEWS' | 'ELEMENT_INTERACTIONS'
+    | 'SESSIONS'
+    | 'APP_LIFECYCLES'
+    | 'DEEP_LINKS'
+    | 'SCREEN_VIEWS'
+    | 'ELEMENT_INTERACTIONS'
   >;
 
+  /**
+   * Android only
+   */
   deviceId?: string;
   partnerId?: string;
   flushIntervalMillis?: number;
@@ -55,12 +62,21 @@ export interface AmplitudeConfiguration {
   serverUrl?: string;
   serverZone?: 'EU' | 'US';
   useBatch?: boolean;
+  /**
+   * Android only
+   */
   useAdvertisingIdForDeviceId?: boolean;
+   /**
+   * Android only
+   */
   useAppSetIdForDeviceId?: boolean;
   enableCoppaControl?: boolean;
   instanceName?: string;
   migrateLegacyData?: boolean;
   offline?: boolean;
+   /**
+   * Android only
+   */
   locationListening?: boolean;
 }
 
