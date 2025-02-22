@@ -10,6 +10,7 @@ import com.getcapacitor.Plugin
 import com.getcapacitor.PluginCall
 import com.getcapacitor.PluginMethod
 import com.getcapacitor.annotation.CapacitorPlugin
+import com.amplitude.android.ExperimentalAmplitudeFeature
 
 @CapacitorPlugin(name = "Amplitude")
 class AmplitudePlugin : Plugin() {
