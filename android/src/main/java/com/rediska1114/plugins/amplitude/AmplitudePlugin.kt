@@ -14,8 +14,9 @@ import com.getcapacitor.annotation.CapacitorPlugin
 @CapacitorPlugin(name = "Amplitude")
 class AmplitudePlugin : Plugin() {
   private val amplitudeInstances: MutableMap<String, Amplitude> = mutableMapOf()
-  private val defaultInstanceName = "$default_instance"
+  private val defaultInstanceName = "\$default_instance"
 
+  @OptIn(ExperimentalAmplitudeFeature::class)
   @PluginMethod
   fun initialize(call: PluginCall) {
     val apiKey = call.getString("apiKey") ?: return call.reject("API Key is required")
